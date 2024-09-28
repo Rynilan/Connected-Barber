@@ -14,5 +14,5 @@ This is our first large project in group to learn and maybe start our path on th
 
 * [Myself(Rynilan)](https://github.com/Rynilan/)  
 * [PAULO GABRIEL DA LUZ](https://github.com/DRXMORENO/)  
-* [mps](https://github.com/mps2004/)  
+* [mps](https://github.com/mps192004/)  
 * [Josias Aragão](https://github.com/JosiasAragao/)  
