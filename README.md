@@ -17,4 +17,4 @@ This is our first large project in group to learn and maybe start our path on th
 * [mps](https://github.com/mps192004/)  
 * [Josias Aragão](https://github.com/JosiasAragao/)  
 * [LuizAntonioLz](https://github.com/LuizAntonioLz/)  
-* [rodrigo_silva_ofc81](https://github.com/RdSilva222/)  
+* [Crystian](https://github.com/CrystianSantos/)  
