@@ -18,3 +18,4 @@ This is our first large project in group to learn and maybe start our path on th
 * [Josias Aragão](https://github.com/JosiasAragao/)  
 * [LuizAntonioLz](https://github.com/LuizAntonioLz/)  
 * [Crystian](https://github.com/CrystianSantos/)  
+* [Luiz Felype](https://github.com/21Lulz's/)
