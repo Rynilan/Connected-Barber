@@ -1,7 +1,6 @@
 from assets.oferecimento import Oferecimento
 
-class servicos(oferecimento):
+class servicos(Oferecimento):
 
-    def __init__ (self,nome, descricao, fotos e valor):
-
-    __super__().__init__(nome, descricao, fotos e valor)
+    def __init__ (self,nome, descricao, fotos, valor):
+        super().__init__(nome, descricao, fotos, valor)
