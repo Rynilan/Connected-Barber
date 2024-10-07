@@ -1,20 +1,23 @@
 from datetime import date
-from abc import ABC, abstractmethod
 
 
-class Ator(ABC):
+class Ator:
     def __init__(self: object,
                  nome: str,
                  data_de_nascimento: date,
                  senha: str,
                  telefone: str,
-                 email: str) -> None:
+                 email: str,
+                 nivel: str) -> None:
         self._nome = nome
         self._data_de_nascimento
-        self.__senha = senha
+        self._senha = senha
         self._telefone = telefone
         self._email = email
-        super().__init__()
+        self._nivel = nivel
+
+    def get_nivel(self: object) -> str:
+        return self._nivel
 
     def get_email(self: object) -> str:
         return self._email
@@ -27,7 +30,3 @@ class Ator(ABC):
 
     def get_nome(self: object) -> str:
         return self._nome
-
-    @abstractmethod
-    def comparar_senha(self: object) -> int:
-        pass
