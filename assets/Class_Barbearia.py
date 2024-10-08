@@ -67,39 +67,39 @@ class Barbearia:
             raise PermissionError("Somente o administrador pode atualizar o portfólio.")
 
 # Exemplo de uso
-barbearia = Barbearia(
-    nome="Barbearia Exemplo", 
-    pais="Brasil", 
-    cidade="São Paulo", 
-    estado="SP", 
-    rua="Rua Exemplo", 
-    numero=123, 
-    cep="12345-678", 
-    horario=("09:00", "18:00"), 
-    funcionario_nome="João", 
-    funcionario_cargo="Gerente", 
-    servico_nome="Corte de cabelo", 
-    servico_preco=30.0
-)
+#barbearia = Barbearia(
+    #nome="Barbearia Exemplo", 
+    #pais="Brasil", 
+    #cidade="São Paulo", 
+    #estado="SP", 
+    #rua="Rua Exemplo", 
+    #numero=123, 
+    #cep="12345-678", 
+    #horario=("09:00", "18:00"), 
+    #funcionario_nome="João", 
+    #funcionario_cargo="Gerente", 
+    #servico_nome="Corte de cabelo", 
+    #servico_preco=30.0
+#)
 
 # Acessar os dados da barbearia
-print(barbearia.get_nome())
-print(barbearia.get_endereco())
-print(barbearia.get_funcionarios())
-print(barbearia.get_servicos())
+#print(barbearia.get_nome())
+#print(barbearia.get_endereco())
+#print(barbearia.get_funcionarios())
+#print(barbearia.get_servicos())
 
 # Adicionar novos serviços e funcionários
-barbearia.adicionar_servico("Barba", 15.0, "João")
-barbearia.adicionar_funcionario("Pedro", "Cabeleireiro", "João")
+#barbearia.adicionar_servico("Barba", 15.0, "João")
+#barbearia.adicionar_funcionario("Pedro", "Cabeleireiro", "João")
 
 # Exibir serviços e funcionários atualizados
-print(barbearia.get_servicos())
-print(barbearia.get_funcionarios())
+#print(barbearia.get_servicos())
+#print(barbearia.get_funcionarios())
 
 # Adicionar produtos e portfólio
-barbearia.adicionar_produto("Pomada para cabelo", 20.0, "João")
-barbearia.adicionar_portfolio("Portfólio de cortes de cabelo", "João")
+#barbearia.adicionar_produto("Pomada para cabelo", 20.0, "João")
+#barbearia.adicionar_portfolio("Portfólio de cortes de cabelo", "João")
 
 # Exibir produtos e portfólio
-print(barbearia.get_produtos())
-print(barbearia.get_portfolio())
+#print(barbearia.get_produtos())
+#print(barbearia.get_portfolio())
