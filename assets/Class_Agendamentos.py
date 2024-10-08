@@ -27,15 +27,6 @@ class Agendamento:
     def set_situacao(self, nova_situacao):
         self.__situacao = nova_situacao
 
-# Exemplo de como pode ser usado
-
-class Cliente:
-    def _init_(self, nome):
-        self.nome = nome
-
-    def obter_dados(self):
-        return {'nome': self.nome}
-
 # Exemplo básico para simular o uso com outros objetos
 
 #cliente = Cliente("Carlos")
@@ -44,6 +35,7 @@ class Cliente:
 #data = "2024-10-10 15:00"  # Exemplo de data
 
 # Criar um agendamento
+
 #agendamento = Agendamento(cliente, funcionario, servico, data, "Pendente")
 
 # Acessar dados do agendamento
