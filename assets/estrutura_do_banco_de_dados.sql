@@ -177,6 +177,7 @@ create table tabela_agendamentos (
 	fk_cliente varchar(100) not null,
 	fk_funcionario varchar(100) not null,
 	fk_servico int(10) not null,
+	data date not null,
 	situacao enum('pendente', 'cancelado', 'concluido', 'marcado') not null,
 	primary key (id),
 	foreign key (fk_funcionario) references tabela_funcionarios(fk_usuario),
