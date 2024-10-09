@@ -47,3 +47,8 @@ class Oferecimento:
             self._fotos = list(self._fotos)
             self._fotos.pop(self._fotos.index(foto))
             self._foto = tuple(self._fotos)
+
+    def comparar_barberia(self: object, barbearia: object) -> bool:
+        if barbearia is self._barbearia:
+            return True
+        return False
