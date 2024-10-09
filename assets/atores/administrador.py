@@ -1,25 +1,19 @@
-from assets.atores.funcionario import Funcionario
-from assets.portfolio import Portfolio
-from assets.oferecimentos.servicos import Servico
-from assets.oferecimentos.produtos import Produto
-
-
 class Administrador:
     def __init__(self, barbearia, funcionario_pai):
         self.__barbearia = barbearia
 
     # Métodos de adição de ser.
-    def adiciona_funcionario(self, funcionario):
+    def adicionar_funcionario(self, funcionario):
         self.__barbearia.adicionar_funcionario(self, funcionario)
 
-    def adiciona_servico(self, servico):
+    def adicionar_servico(self, servico):
         self.__barbearia.adicionar_servico(self, servico)
 
     def adicionar_produto(self, produto):
         self.__barbearia.adicionar_produto(self, produto)
 
     def criar_portfolio(self, portfolio):
-        self.__barbearia.setter(self, 'portfolio', portfolio)
+        self.__barbearia.adicionar_portfolio(self, portfolio)
 
     # Métodos de edição de ser.
     def editar_funcionario(self, funcionario):
@@ -36,16 +30,16 @@ class Administrador:
 
     # Getters dos atributos da barbearia.
     def get_portifolio(self):
-        return self.__barbearia.get_portfolio(self)
+        return self.__barbearia.get_portfolio()
 
     def get_funcionarios(self):
-        return self.__barbearia.get_funcionarios(self)
+        return self.__barbearia.get_funcionarios()
 
     def get_produtos(self):
-        return self.__barbearia.get_produtos(self)
+        return self.__barbearia.get_produtos()
 
     def get_servicos(self):
-        return self.__barbearia.get_servicos(self)
+        return self.__barbearia.get_servicos()
 
     # exclui o ser
     def excluir_funcionario(self, funcionario):
@@ -61,7 +55,7 @@ class Administrador:
         self.__barbearia.excluir_servico(self, servico)
 
     # Exclusão total da barbearia.
-    def Excluir_tudo(self):
+    def excluir_tudo(self):
         self.__barbearia.exclusao(self)
 
     def Aumenta_nivel(self, funcionario):
