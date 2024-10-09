@@ -1,5 +1,4 @@
 -- Criado o banco de dados. --
-drop database Connected_Barber;
 create database Connected_Barber;
 use Connected_Barber;
 
