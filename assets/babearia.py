@@ -104,7 +104,7 @@ class Barbearia:
             self.__servicos.pop(self.__servicos.index(servico))
             self.__servicos = tuple(self.__servicos)
 
-    def excluir_tudo(self, operador):
+    def exclusao(self, operador):
         if self.__verificar_permissao(operador):
             # Comando para excluir do banco de dados.
             self = None

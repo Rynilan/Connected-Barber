@@ -1,62 +1,58 @@
 class Administrador:
-    def __init__(self, barbearia, funcionario_pai):
-        self.__barbearia = barbearia
+    def __init__(self, funcionario_pai):
+        self.__pai = funcionario_pai
 
     # Métodos de adição de ser.
     def adicionar_funcionario(self, funcionario):
-        self.__barbearia.adicionar_funcionario(self, funcionario)
+        self.get_barbearia().adicionar_funcionario(self, funcionario)
 
     def adicionar_servico(self, servico):
-        self.__barbearia.adicionar_servico(self, servico)
+        self.get_barbearia().adicionar_servico(self, servico)
 
     def adicionar_produto(self, produto):
-        self.__barbearia.adicionar_produto(self, produto)
+        self.get_barbearia().adicionar_produto(self, produto)
 
     def criar_portfolio(self, portfolio):
-        self.__barbearia.adicionar_portfolio(self, portfolio)
+        self.get_barbearia().adicionar_portfolio(self, portfolio)
 
     # Métodos de edição de ser.
-    def editar_funcionario(self, funcionario):
-        self.__barbearia.setter(self, 'funcionario', funcionario)
+    def editar_funcionario(self, funcionario, funcionario_editado):
+        self.get_barbearia().editar_funcionario(self, funcionario, funcionario_editado)
 
-    def editar_servico(self, servico):
-        self.__barbearia.setter(self, 'servico', servico)
+    def editar_servico(self, servico, servico_editado):
+        self.get_barbearia().editar_servico(self, servico, servico_editado)
 
-    def editar_produto(self, produto):
-        self.__barbearia.setter(self, 'produto', produto)
+    def editar_produto(self, produto, produto_editado):
+        self.get_barbearia().editar_produto(self, produto, produto_editado)
 
     def editar_portfolio(self, portfolio):
         self.criar_portfolio(portfolio)
 
-    # Getters dos atributos da barbearia.
-    def get_portifolio(self):
-        return self.__barbearia.get_portfolio()
+    def editar_endereco(self, endereco):
+        self.get_barbearia().editar_endereco(self, endereco)
 
-    def get_funcionarios(self):
-        return self.__barbearia.get_funcionarios()
+    def editar_horario(self, horario):
+        self.get_barbearia().editar_horario(self, horario)
 
-    def get_produtos(self):
-        return self.__barbearia.get_produtos()
-
-    def get_servicos(self):
-        return self.__barbearia.get_servicos()
+    def editar_nome(self, nome):
+        self.get_barbearia().editar_horario(self, nome)
 
     # exclui o ser
     def excluir_funcionario(self, funcionario):
-        self.__barbearia.excluir_funcionario(self, funcionario)
+        self.get_barbearia().excluir_funcionario(self, funcionario)
 
     def excluir_produto(self, produto):
-        self.__barbearia.excluir_produto(self, produto)
+        self.get_barbearia().excluir_produto(self, produto)
 
     def excluir_portfolio(self, portfolio):
-        self.__barbearia.setter(self, 'portfolio', None)
+        self.get_barbearia().setter(self, 'portfolio', None)
 
     def excluir_servico(self, servico):
-        self.__barbearia.excluir_servico(self, servico)
+        self.get_barbearia().excluir_servico(self, servico)
 
     # Exclusão total da barbearia.
-    def excluir_tudo(self):
-        self.__barbearia.exclusao(self)
+    def excluisao(self):
+        self.get_barbearia().exclusao(self)
 
     def Aumenta_nivel(self, funcionario):
         funcionario.aumentar_nivel(self)

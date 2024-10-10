@@ -9,27 +9,32 @@ class Ator:
                  telefone: str,
                  email: str,
                  nivel: str) -> None:
-        self._nome = nome
-        self._data_de_nascimento
-        self._senha = senha
-        self._telefone = telefone
-        self._email = email
-        self._nivel = nivel
+        self.__nome = nome
+        self.__data_de_nascimento = data_de_nascimento
+        self.__senha = senha
+        self.__telefone = telefone
+        self.__email = email
+        self.__nivel = nivel
 
-    def get_nivel(self: object) -> str:
-        return self._nivel
+    def get_nivel(self: object, operador) -> str:
+        if operador is self:
+            return self._nivel
 
-    def get_email(self: object) -> str:
-        return self._email
+    def get_email(self: object, operador) -> str:
+        if operador is self:
+            return self._email
 
-    def get_data_de_nascimento(self: object) -> date:
-        return self._data_de_nascimento
+    def get_data_de_nascimento(self: object, operador) -> date:
+        if operador is self:
+            return self._data_de_nascimento
 
-    def get_telefone(self: object) -> str:
-        return self._telefone
+    def get_telefone(self: object, operador) -> str:
+        if operador is self:
+            return self._telefone
 
-    def get_nome(self: object) -> str:
-        return self._nome
+    def get_nome(self: object, operador) -> str:
+        if operador is self:
+            return self._nome
 
     def set_nome(self: object, operador: object, nome: str):
         if operador is self:
