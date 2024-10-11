@@ -4,10 +4,7 @@ class endereco:
         self.__pais = pais
         self.__estado = estado
         self.__cidade = cidade
-        self.__rua = rua
-        self.__numero = numero
         self.__cep = cep
-        self.__fuso_horario = fuso_horario
         self.complemento = complemento
 
     def get_pais(self):
@@ -19,17 +16,8 @@ class endereco:
     def get_cidade(self):
         return self.__cidade
 
-    def get_rua(self):
-        return self.__rua
-
-    def get_numero(self):
-        return self.__numero
-
     def get_cep(self):
         return self.__cep
-
-    def get_fusohorario(self):
-        return self.__fuso_horario
 
     def get_complemento(self):
         return self.__complemento
@@ -52,19 +40,6 @@ class endereco:
     def set_cep(self: object, operador: object, cep: str) -> None:
         if self.__verificar_permissao(operador):
             self.__cep = cep
-
-    def set_numero(self: object, operador: object, numero: str) -> None:
-        if self.__verificar_permissao(operador):
-            self.__numero = numero
-
-    def set_fuso_horario(self: object, operador: object, fuso_horario: str
-                         ) -> None:
-        if self.__verificar_permissao(operador):
-            self.__fuso_horario = fuso_horario
-
-    def set_rua(self: object, operador: object, rua: str) -> None:
-        if self.__verificar_permissao(operador):
-            self.__rua = rua
 
     def set_complemento(self: object, operador: object, complemento: str) -> None:
         if self.__verificar_permissao(operador):
