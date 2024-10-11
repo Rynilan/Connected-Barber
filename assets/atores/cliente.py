@@ -87,9 +87,12 @@ class Cliente:
     # Cliente interagindo com agendamentos.
     def obter_agendamentos(self, filtro=None):
         # IMPOSSÍVEL IMPLEMENTAÇÃO NO MOMENTO, DEPENDE DA CONEXÃO COM O BANCO
-        # DE DADOS. FEITO NO DIA: 10/10/2024
+        # DE DADOS. COMENTÁRIO FEITO NO DIA: 10/10/2024
         ...
 
     def dar_feedback(self, agendamento, feedback):
         if agendamento.get_cliente(self) is self:
             agendamento.registrar_feedback(feedback)
+
+    def cancelar_agendamento(self, agendamento):
+        agendamento.cancelar(self)

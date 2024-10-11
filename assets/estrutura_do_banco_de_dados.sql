@@ -53,11 +53,10 @@ create table tabela_endereco (
 
 -- Criação da tabela das barbearias. -- 
 create table tabela_barbearias (
-	id int(10) not null auto_increment,
 	nome varchar(100) not null,
 	fk_endereco int(10) not null, -- chave estrangeira para a tabela de endereco --
 	fk_portfolio int(10) not null, -- chave estrangeira para o endereco de seu portfólio --
-	primary key (id),
+	primary key (nome),
 	foreign key (fk_endereco) references tabela_endereco(id)
 );
 
@@ -100,7 +99,7 @@ create table tabela_funcionarios (
 	fk_barbearia int(10) not null,
 	primary key (fk_usuario),
 	foreign key (fk_usuario) references tabela_usuarios(email),
-	foreign key (fk_barbearia) references tabela_barbearias(id)
+	foreign key (fk_barbearia) references tabela_barbearias(nome)
 );
 
 
@@ -112,7 +111,7 @@ create table tabela_oferecimentos (
 	descricao varchar(500) not null,
 	preco float(10) not null,
 	primary key (id),
-	foreign key (fk_barbearia) references tabela_barbearias(id)
+	foreign key (fk_barbearia) references tabela_barbearias(nome)
 );
 
 create table tabela_fotos_oferecimento (
@@ -144,7 +143,7 @@ create table tabela_portfolios_barbearia (
 	fk_barbearia int(10) not null,
 	descricao varchar(500) not null,
 	primary key (id),
-	foreign key (fk_barbearia) references tabela_barbearias(id)
+	foreign key (fk_barbearia) references tabela_barbearias(nome)
 );
 create table tabela_fotos_barbearia (
 	id int(10) not null auto_increment,
@@ -153,7 +152,6 @@ create table tabela_fotos_barbearia (
 	primary key (id),
 	foreign key (fk_portfolio) references tabela_portfolios_barbearia(id)
 );
-
 
 create table tabela_portfolios_funcionario (
 	id int(10) not null auto_increment,
