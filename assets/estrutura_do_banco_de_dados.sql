@@ -96,7 +96,7 @@ create table tabela_preferencias (
 create table tabela_funcionarios (
 	fk_usuario varchar(100) not null,
 	fk_portfolio int(10) not null,
-	fk_barbearia int(10) not null,
+	fk_barbearia varchar(100) not null,
 	primary key (fk_usuario),
 	foreign key (fk_usuario) references tabela_usuarios(email),
 	foreign key (fk_barbearia) references tabela_barbearias(nome)
@@ -106,7 +106,7 @@ create table tabela_funcionarios (
 -- Criação das tabelas de servicos e produtos. --
 create table tabela_oferecimentos (
 	id int(10) not null auto_increment,
-	fk_barbearia int(10) not null,
+	fk_barbearia varchar(100) not null,
 	nome varchar(100) not null,
 	descricao varchar(500) not null,
 	preco float(10) not null,
@@ -140,7 +140,7 @@ create table tabela_servicos (
 -- Criação da tabela que armazenará a informação dos portfólios. --
 create table tabela_portfolios_barbearia (
 	id int(10) not null auto_increment,
-	fk_barbearia int(10) not null,
+	fk_barbearia varchar(100) not null,
 	descricao varchar(500) not null,
 	primary key (id),
 	foreign key (fk_barbearia) references tabela_barbearias(nome)
