@@ -85,9 +85,14 @@ class Cliente:
             self.__preferencias = tuple(self.__preferencias)
 
     # Cliente interagindo com agendamentos.
-    def obter_agendamentos(self, filtro=None):
+    def obter_agendamentos(self, filtro: tuple[str] = None):
         # IMPOSSÍVEL IMPLEMENTAÇÃO NO MOMENTO, DEPENDE DA CONEXÃO COM O BANCO
-        # DE DADOS. COMENTÁRIO FEITO NO DIA: 10/10/2024
+        # DE DADOS (tabela_agendamentos). COMENTÁRIO FEITO NO DIA: 10/10/2024
+        ...
+
+    def criar_agendamento(self, servico, funcionario, data, complemento):
+        # IMPOSSÍVEL DE IMPLEMENTAR, FALTA CONEXÃO COM O BANCO DE DADOS
+        # (tabela_agendamentos). COMENTÁRIO FEITO NO NO DIA 11/10/2024.
         ...
 
     def dar_feedback(self, agendamento, feedback):
@@ -96,3 +101,6 @@ class Cliente:
 
     def cancelar_agendamento(self, agendamento):
         agendamento.cancelar(self)
+
+    def alterar_agendamento(self, agendamento):
+        agendamento.update(agendamento)

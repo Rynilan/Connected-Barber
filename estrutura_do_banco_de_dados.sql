@@ -1,4 +1,5 @@
 -- Criado o banco de dados. --
+-- drop database Connected_Barber; --
 create database Connected_Barber;
 use Connected_Barber;
 
@@ -37,7 +38,7 @@ create table tabela_cidades (
 
 -- Criação da tabela do endereço. --
 -- Contém as informações do endereço da respectiva barbearia. --
-create table tabela_endereco (
+create table tabela_enderecos (
 	id int(10) not null auto_increment,
 	fk_pais int(10) not null,
 	fk_estado int(10) not null,
@@ -51,44 +52,57 @@ create table tabela_endereco (
 );
 
 
+-- Criação da tabela portfólios. --
+create table tabela_portfolios (
+	id int(10) not null auto_increment,
+	descricao varchar(500) not null,
+	primary key (id)
+);
+
+-- Tabela que vai guardar o endereço das fotos de todos os seres do sistema. --
+-- Barbearias, Funcionários, Produtos e Serviços. --
+create table tabela_fotos (
+	id int(15) not null auto_increment,
+	endereco varchar(500) not null,
+	fk_portfolio int(10) not null,
+	primary key (id),
+	foreign key (fk_portfolio) references tabela_portfolios(id)
+);
+
+
 -- Criação da tabela das barbearias. -- 
 create table tabela_barbearias (
 	nome varchar(100) not null,
 	fk_endereco int(10) not null, -- chave estrangeira para a tabela de endereco --
 	fk_portfolio int(10) not null, -- chave estrangeira para o endereco de seu portfólio --
 	primary key (nome),
-	foreign key (fk_endereco) references tabela_endereco(id)
+	foreign key (fk_endereco) references tabela_enderecos(id),
+	foreign key (fk_portfolio) references tabela_portfolios(id)
 );
 
 
 -- Criação da tabela dos usuários. --
 -- Conterá informação de todos os usuários, clientes, funcionários, adminsitradores... --
+-- separados pelo campo nível. --
 create table tabela_usuarios (
 	email varchar(100) not null,
 	senha varchar(16) not null,
 	nome varchar(100) not null,
 	data_de_nascimento date not null,
 	telefone varchar(12) not null,
+	cep varchar(8) not null,
 	nivel enum('cliente', 'funcionário', 'administrador') not null,
 	primary key (email)
 );
 
 
 -- Organização para criação da tabela de clientes. --
-create table tabela_clientes (
-	fk_usuario varchar(100) not null,
-	CEP int(8) not null,
-	primary key (fk_usuario),
-	foreign key (fk_usuario) references tabela_usuarios(email)
-);
-
-
 create table tabela_preferencias (
 	id int(10) not null auto_increment,
 	descricao varchar(500) not null,
 	fk_cliente varchar(100) not null,
 	primary key (id),
-	foreign key(fk_cliente) references tabela_clientes(fk_usuario)
+	foreign key(fk_cliente) references tabela_usuarios(email)
 );
 
 
@@ -104,68 +118,28 @@ create table tabela_funcionarios (
 
 
 -- Criação das tabelas de servicos e produtos. --
-create table tabela_oferecimentos (
+create table tabela_produtos (
 	id int(10) not null auto_increment,
 	fk_barbearia varchar(100) not null,
 	nome varchar(100) not null,
-	descricao varchar(500) not null,
-	preco float(10) not null,
-	primary key (id),
-	foreign key (fk_barbearia) references tabela_barbearias(nome)
-);
-
-create table tabela_fotos_oferecimento (
-	fk_oferecimento int(10) not null,
-	endereco varchar(100) not null,
-	primary key (fk_oferecimento),
-	foreign key (fk_oferecimento) references tabela_oferecimentos(id)
-);
-
-create table tabela_produtos (
-	fk_oferecimento int(10) not null,
+	preco float(8) not null,
 	marca varchar(100) not null,
 	validade date not null,
-	primary key (fk_oferecimento),
-	foreign key (fk_oferecimento) references tabela_oferecimentos(id)
+	fk_info int(10) not null, -- contém as fotos e descricao do produto --
+	primary key (id),
+	foreign key (fk_barbearia) references tabela_barbearias(nome),
+	foreign key (fk_info) references tabela_portfolios(id)
 );
-
 create table tabela_servicos (
-	fk_oferecimento int(10) not null,
-	duracao int(3) not null,
-	primary key (fk_oferecimento),
-	foreign key (fk_oferecimento) references tabela_oferecimentos(id)
-);
-
-
--- Criação da tabela que armazenará a informação dos portfólios. --
-create table tabela_portfolios_barbearia (
 	id int(10) not null auto_increment,
 	fk_barbearia varchar(100) not null,
-	descricao varchar(500) not null,
+	nome varchar(100) not null,
+	preco float(8) not null,
+	tempo_estimado int(5) not null, -- em minutos --
+	fk_info int(10) not null,
 	primary key (id),
-	foreign key (fk_barbearia) references tabela_barbearias(nome)
-);
-create table tabela_fotos_barbearia (
-	id int(10) not null auto_increment,
-	fk_portfolio int(10) not null,
-	endereco varchar(100) not null,
-	primary key (id),
-	foreign key (fk_portfolio) references tabela_portfolios_barbearia(id)
-);
-
-create table tabela_portfolios_funcionario (
-	id int(10) not null auto_increment,
-	fk_funcionario varchar(100) not null,
-	descricao varchar(500) not null,
-	primary key (id),
-	foreign key (fk_funcionario) references tabela_funcionarios(fk_usuario)
-);
-create table tabela_fotos_funcionario (
-	id int(10) not null auto_increment,
-	fk_portfolio int(10) not null,
-	endereco varchar(100) not null,
-	primary key (id),
-	foreign key (fk_portfolio) references tabela_portfolios_funcionario(id)
+	foreign key (fk_barbearia) references tabela_barbearias(nome),
+	foreign key (fk_info) references tabela_portfolios(id)
 );
 
 
@@ -179,13 +153,6 @@ create table tabela_agendamentos (
 	situacao enum('pendente', 'cancelado', 'concluido', 'marcado') not null,
 	primary key (id),
 	foreign key (fk_funcionario) references tabela_funcionarios(fk_usuario),
-	foreign key (fk_cliente) references tabela_clientes(fk_usuario),
-	foreign key (fk_servico) references tabela_servicos(fk_oferecimento)
+	foreign key (fk_cliente) references tabela_usuarios(email),
+	foreign key (fk_servico) references tabela_servicos(id)
 );
-
-
--- Definição de chaves estrangeiras que não puderam ser feitas durante a criação da tabela (ou não). --
--- funcionário com seu portfólio. --
-alter table tabela_funcionarios add constraint tabela_funcionarios.fk_portfolio foreign key tabela_funcionarios(fk_portfolio) references tabela_portfolios_funcionario(id);
--- barbearia com seu portfólio. --
-alter table tabela_barbearias add constraint tabela_barbearias.fk_portfolio foreign key tabela_barbearias(fk_portfolio) references tabela_portfolios_barbearia(id);
