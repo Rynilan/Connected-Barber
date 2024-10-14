@@ -113,7 +113,8 @@ create table tabela_funcionarios (
 	fk_barbearia varchar(100) not null,
 	primary key (fk_usuario),
 	foreign key (fk_usuario) references tabela_usuarios(email),
-	foreign key (fk_barbearia) references tabela_barbearias(nome)
+	foreign key (fk_barbearia) references tabela_barbearias(nome),
+	foreign key (fk_portfolio) references tabela_portfolios(id)
 );
 
 
