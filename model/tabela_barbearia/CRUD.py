@@ -16,7 +16,8 @@ def select(
     nome: str,
     campos: tuple[str] = '*'
 ) -> list[str]:
-    """ Retorna os dados da tabela barbearia cujo o nome coincide com o dado. """
+    """ Retorna os dados da tabela barbearia cujo o nome coincide com o dado.
+    """
     cursor, banco = conectar()
     cursor.execute(
         'select ' + campos + ' from tabela_barbearias join tabela_endereco j' +
