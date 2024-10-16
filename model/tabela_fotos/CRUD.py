@@ -2,7 +2,6 @@ from mysql.connector import connect
 
 
 def create(id_portfolio, endereco):
-    # Srtª Paiva
     banco = connect(
       host="localhost",
       user="root",
