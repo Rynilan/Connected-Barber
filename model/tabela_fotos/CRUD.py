@@ -1,8 +1,9 @@
 from mysql.connector import connect
 
-def create(id_portfolio,endereco):
+
+def create(id_portfolio, endereco):
     # Srtª Paiva
-    banco = mysql.connector.connect(
+    banco = connect(
       host="localhost",
       user="root",
       password="",
@@ -10,8 +11,6 @@ def create(id_portfolio,endereco):
     )
     cursor = banco.cursor()
     cursor.execute("insert into tabela_fotos(id,endereco,fk_portfolio)" +
-                   "values (default, '{}', {});".format(endereco,id_portfolio))
+                   "values (default, '{}', {})".format(endereco, id_portfolio))
     cursor.close()
     banco.close()
-    
-
