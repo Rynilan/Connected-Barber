@@ -1,15 +1,17 @@
 import mysql.connector
 
-try:
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="Connect_Barber"
-    )
 
-    mycursor = mydb.cursor()
-    print("Conectado no banco com sucesso!")
+def conectar():
+    try:
+        mydb = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="Connect_Barber"
+        )
 
-except:
-    print("Conexao falhou!")
+        mycursor = mydb.cursor()
+        print("Conectado no banco com sucesso!")
+        return mydb, mycursor
+    except:
+        print("Conexao falhou!")
