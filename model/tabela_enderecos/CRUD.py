@@ -1,104 +1,52 @@
-from connect import *
+from connect import conectar
 
 
 class conexao():
-
-    def salvar(self,pais,estado,cidade,cep,complemento,barbearia):
+    def salvar(self, pais, estado, cidade, cep, complemento):
         try:
-            sql = "INSERT INTO endereco (pais,estado,cidade,cep,complemento,barbearia) VALUES (%s, %s, %s, %s, %s, %s)"
-            val = (pais,estado,cidade,cep,complemento,barbearia)
+            mydb, mycursor = conectar()
+            sql = str("INSERT INTO endereco (fk_pais,fk_estado,fk_cidade,cep" +
+                      ",complemento) VALUES (%d, %d, %d, %s, %s, %s)")
+            val = (pais, estado, cidade, cep, complemento)
             mycursor.execute(sql, val)
             mydb.commit()
-
-            print(mycursor.rowcount, "Endereço cadastrado com sucesso!")
-
+            mycursor.close()
+            mydb.close()
         except:
-            print("Erro ao adicionar o Endereço")
+            print("Erro ao adicionar o Endereço")  # Futuramente remover print.
 
     def lista():
         try:
-
+            mydb, mycursor = conectar()
             mycursor.execute("SELECT * FROM endereco")
-
-            myresult = mycursor.fetchall()
-
-            for x in myresult:
-              print(x)
-              
+            mycursor.close()
+            mydb.close()
+            return mycursor.fetchall()
         except:
             print("Erro ao conectar a tabela")
 
     def apagar(id):
-
         try:
+            mydb, mycursor = conectar()
             sql = "DELETE FROM endereco WHERE id = %s"
             mycursor.execute(sql, (id,))
             mydb.commit()
-
+            mycursor.close()
+            mydb.close()
         except:
             print("Erro ao deletar o endereço da barbearia")
 
-    def alterar(id):
-        escolha = input("Que campo você deseja mudar? (pais,estado,cidade,cep,complemento,barbearia): ")
-        
-        if escolha == "pais":
-            novo_pais = int (input("Alterar o Pais para: "))
-            
-            try:
-                sql = "UPDATE endereco SET pais = %s WHERE id = %s"
-                mycursor.execute(sql, (novo_pais, id))
-                mydb.commit()
-                print(mycursor.rowcount, "Pais alterado com sucesso!")
-            except:
-                print("Erro ao mudar o pais")
-
-
-        elif escolha == "estado":
-            novo_estado = int (input("Alterar o Estado para: "))
-
-            try:
-                sql = "UPDATE endereco SET estado = %s WHERE id = %s"
-                mycursor.execute(sql, (novo_estado, id))
-                mydb.commit()
-                print(mycursor.rowcount, "Estado alterado com sucesso")
-            except:
-                print("Erro ao mudar o estado")
-
-        elif escolha == "cidade":
-            nova_cidade = int (input("Alterar o cidade para: "))
-
-            try:
-                sql = "UPDATE endereco SET cidade = %s WHERE id = %s"
-                mycursor.execute(sql, (nova_cidade, id))
-                mydb.commit()
-                print(mycursor.rowcount, "Cidade alterado com sucesso")
-            except:
-                print("Erro ao mudar a Cidade")
-
-        elif escolha == "cep":
-            novo_cep = input("Alterar o Cep para: ")
-
-            try:
-                sql = "UPDATE endereco SET cep = %s WHERE id = %s"
-                mycursor.execute(sql, (novo_cep, id))
-                mydb.commit()
-                print(mycursor.rowcount, "Cep alterado com sucesso")
-            except:
-                print("Erro ao mudar o Cep")
-        
-        elif escolha == "complemento":
-            novo_complemento = input("Alterar o Cep para: ")
-
-            try:
-                sql = "UPDATE complemento SET cep = %s WHERE id = %s"
-                mycursor.execute(sql, (novo_complemento, id))
-                mydb.commit()
-                print(mycursor.rowcount, "Complemento alterado com sucesso")
-            except:
-                print("Erro ao mudar o Complemento")
-        
-        
-
-mycursor.close()
-mydb.close()
-
+    def alterar(identificador, campos, valores):
+        mydb, mycursor = conectar()
+        if len(campos) != len(valores) and campos and valores:
+            print("erro, tamanho dos campos difere dos valores")
+        parametros_sql = ''
+        for indice in range(0, len(campos)):
+            parametros_sql += '{} = {}, '.format(campos[indice],
+                                                 valores[indice])
+        parametros_sql.removesuffix(', ')
+        mycursor.execute('update tabela_endereco set {} where id = {};'.format(
+            parametros_sql, identificador
+        ))
+        mycursor.close()
+        mydb.close()
