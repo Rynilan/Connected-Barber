@@ -2,7 +2,7 @@ from conn import *
 
 def create(id, nome, preco):
         
-        sql = str("INSERT INTO tabela_enderecos (fk_id,fk_nome,fk_preco," ) 
+        sql = str("INSERT INTO tabela_servicos (fk_id,fk_nome,fk_preco," ) 
         VALUES ( %s, %s, %s)"
         val = (id, nome, preco,)
         mycursor.execute(sql, val)
@@ -13,7 +13,7 @@ def create(id, nome, preco):
 
 def select(identificador):
 
-        mycursor.execute("SELECT * FROM tabela_enderecos where id = {}".format(
+        mycursor.execute("SELECT * FROM tabela_servicos where id = {}".format(
             identificador
         ))
         mycursor.close()
@@ -24,7 +24,7 @@ def select(identificador):
 
 def delete(id):
 
-        sql = "DELETE FROM tabela_enderecos WHERE id = %s"
+        sql = "DELETE FROM tabela_servicos WHERE id = %s"
         mycursor.execute(sql, (id,))
         mydb.commit()
         mycursor.close()
@@ -41,7 +41,7 @@ def update(identificador, campos, valores):
         parametros_sql += '{} = {}, '.format(campos[indice],
                                              valores[indice])
     parametros_sql.removesuffix(', ')
-    mycursor.execute('update tabela_enderecos set {} where id = {};'.format(
+    mycursor.execute('update tabela_servicos set {} where id = {};'.format(
         parametros_sql, identificador
     ))
     mycursor.close()
