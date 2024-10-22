@@ -13,3 +13,22 @@ def create(id_portfolio, endereco):
                    "values (default, '{}', {})".format(endereco, id_portfolio))
     cursor.close()
     banco.close()
+
+
+def update(id_foto, campos, valores):
+    mydb = connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="Conected_Barber"
+    )
+    mycursor = mydb.cursor()
+    formatar = ""
+    for indice in range(0, len(valores)):
+        formatar += "{}={}, ".format(campos[indice], valores[indice])
+    formatar.removesuffix(", ")
+    mycursor.execute("update from tabela_fotos set {} where id = {}".format(
+        formatar, id_foto))
+    mydb.commit()
+    mycursor.close()
+    mydb.close()
