@@ -16,6 +16,8 @@ def create(id_portfolio, endereco):
 
 
 def update(id_foto, campos, valores):
+    if len(campos) != len(valores):
+        raise ValueError('dimensões diferentes entre campos e valores.')
     mydb = connect(
         host="localhost",
         user="root",

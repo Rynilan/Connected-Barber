@@ -57,6 +57,8 @@ def select(email):
 
 
 def update(campos, valores, email):
+    if len(valores) != len(campos):
+        raise ValueError('dimensões diferentes entre campos e valores.')
     mydb = mysql.connector.connect(
         host="root",
         user="connected_barber",

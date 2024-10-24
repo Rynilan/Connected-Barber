@@ -48,7 +48,7 @@ def delete(id):
 def update(identificador, campos, valores):
     mydb, mycursor = conectar()
     if len(campos) != len(valores) and campos and valores:
-        return
+        raise ValueError('dimensões diferentes entre campos e valores.')
     parametros_sql = ''
     for indice in range(0, len(campos)):
         parametros_sql += '{} = {}, '.format(campos[indice],
