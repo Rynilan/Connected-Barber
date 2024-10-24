@@ -13,7 +13,7 @@ def conectar():
     return mydb, mycursor
 
 
-def create(self, pais, estado, cidade, cep, complemento):
+def insert(self, pais, estado, cidade, cep, complemento):
     mydb, mycursor = conectar()
     sql = str("INSERT INTO tabela_enderecos (fk_pais,fk_estado,fk_cidade," +
               "cep,complemento) VALUES (%d, %d, %d, %s, %s, %s)")

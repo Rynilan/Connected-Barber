@@ -11,7 +11,7 @@ def conectar():
     return banco, banco.cursor()
 
 
-def create(fk_usuario, fk_portfolio, fk_barbearia):
+def insert(fk_usuario, fk_portfolio, fk_barbearia):
     banco, cursor = conectar()
     cursor.execute(
         'insert into tabela_funcionarios values (default, %s, %s, %d, %s, %s)',

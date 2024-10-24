@@ -11,7 +11,7 @@ def conectar():
     return banco, banco.cursor()
 
 
-def create(descricao, fk_cliente):
+def insert(descricao, fk_cliente):
     banco, cursor = conectar()
     cursor.execute('insert into tabela_preferencias values (default, %s, %s);',
                    (descricao, fk_cliente))

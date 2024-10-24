@@ -14,7 +14,7 @@ def conectar():
 # id, fk_barbearia, nome, preco, tempo_estimado, fk_info.
 
 
-def create(fk_barbearia, nome, preco, tempo_estimado, fk_info):
+def insert(fk_barbearia, nome, preco, tempo_estimado, fk_info):
     mydb, mycursor = conectar()
     sql = str("INSERT INTO tabela_servicos values (default, %d, %s," +
               "%.2f, %d, %d);")

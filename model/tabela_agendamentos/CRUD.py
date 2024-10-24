@@ -11,7 +11,7 @@ def conectar():
     return banco, banco.cursor()
 
 
-def create(fk_cliente, fk_servico, fk_funcionario, data, situacao):
+def insert(fk_cliente, fk_servico, fk_funcionario, data, situacao):
     banco, cursor = conectar()
     cursor.execute(
         'insert into tabela_agendamentos values (default, %s, %s, %d, %s, %s)',

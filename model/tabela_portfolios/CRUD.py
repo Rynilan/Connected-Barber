@@ -1,7 +1,7 @@
 import mysql.connector
 
 
-def create(valor):
+def insert(valor):
     banco = mysql.connector.connect(
       host="localhost",
       user="root",

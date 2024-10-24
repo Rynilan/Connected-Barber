@@ -1,7 +1,7 @@
 from mysql.connector import connect
 
 
-def create(id_portfolio, endereco):
+def insert(id_portfolio, endereco):
     banco = connect(
       host="localhost",
       user="root",
