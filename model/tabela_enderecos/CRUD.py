@@ -2,64 +2,50 @@ import mysql.connector
 
 
 def conectar():
-    try:
-        mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="Connect_Barber"
-        )
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="Connect_Barber"
+    )
 
-        mycursor = mydb.cursor()
-        print("Conectado no banco com sucesso!")
-        return mydb, mycursor
-    except:
-        print("Conexao falhou!")
+    mycursor = mydb.cursor()
+    return mydb, mycursor
 
 
 def create(self, pais, estado, cidade, cep, complemento):
-    try:
-        mydb, mycursor = conectar()
-        sql = str("INSERT INTO tabela_enderecos (fk_pais,fk_estado,fk_cidade," +
-                  "cep,complemento) VALUES (%d, %d, %d, %s, %s, %s)")
-        val = (pais, estado, cidade, cep, complemento)
-        mycursor.execute(sql, val)
-        mydb.commit()
-        mycursor.close()
-        mydb.close()
-    except:
-        print("Erro ao adicionar o Endereço")  # Futuramente remover print.
+    mydb, mycursor = conectar()
+    sql = str("INSERT INTO tabela_enderecos (fk_pais,fk_estado,fk_cidade," +
+              "cep,complemento) VALUES (%d, %d, %d, %s, %s, %s)")
+    val = (pais, estado, cidade, cep, complemento)
+    mycursor.execute(sql, val)
+    mydb.commit()
+    mycursor.close()
+    mydb.close()
 
 
 def select(identificador):
-    try:
-        mydb, mycursor = conectar()
-        mycursor.execute("SELECT * FROM tabela_enderecos where id = {}".format(
-            identificador
-        ))
-        mycursor.close()
-        mydb.close()
-        return mycursor.fetchall()
-    except:
-        print("Erro ao conectar a tabela")
+    mydb, mycursor = conectar()
+    mycursor.execute("SELECT * FROM tabela_enderecos where id = {}".format(
+        identificador
+    ))
+    mycursor.close()
+    mydb.close()
+    return mycursor.fetchall()
 
 
 def delete(id):
-    try:
-        mydb, mycursor = conectar()
-        sql = "DELETE FROM tabela_enderecos WHERE id = %s"
-        mycursor.execute(sql, (id,))
-        mydb.commit()
-        mycursor.close()
-        mydb.close()
-    except:
-        print("Erro ao deletar o endereço da barbearia")
+    mydb, mycursor = conectar()
+    sql = "DELETE FROM tabela_enderecos WHERE id = %s"
+    mycursor.execute(sql, (id,))
+    mydb.commit()
+    mycursor.close()
+    mydb.close()
 
 
 def update(identificador, campos, valores):
     mydb, mycursor = conectar()
     if len(campos) != len(valores) and campos and valores:
-        print("erro, tamanho dos campos difere dos valores")
         return
     parametros_sql = ''
     for indice in range(0, len(campos)):

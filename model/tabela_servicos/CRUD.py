@@ -48,7 +48,6 @@ def delete(id):
 def update(identificador, campos, valores):
     mydb, mycursor = conectar()
     if len(campos) != len(valores) and campos and valores:
-        print("erro, tamanho dos campos difere dos valores")
         return
     parametros_sql = ''
     for indice in range(0, len(campos)):
