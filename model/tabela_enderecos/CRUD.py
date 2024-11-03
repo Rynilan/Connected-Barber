@@ -20,8 +20,11 @@ def insert(self, pais, estado, cidade, cep, complemento):
     val = (pais, estado, cidade, cep, complemento)
     mycursor.execute(sql, val)
     mydb.commit()
+    mycursor.execute('SELECT MAX(id) FROM tabela_enderecos;')
+    ultimo_registro = mycursor.fetchall()
     mycursor.close()
     mydb.close()
+    return ultimo_registro
 
 
 def select(identificador):
@@ -29,9 +32,10 @@ def select(identificador):
     mycursor.execute("SELECT * FROM tabela_enderecos where id = {}".format(
         identificador
     ))
+    resultados = mycursor.fetchall()
     mycursor.close()
     mydb.close()
-    return mycursor.fetchall()
+    return resultados
 
 
 def delete(id):
