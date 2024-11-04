@@ -1,0 +1,6 @@
+font-family:Monospace
+font-size:12
+font-extra:None
+bg-color:#0f0f0f
+fg-color:#f0f0f0
+title:
