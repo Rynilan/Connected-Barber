@@ -1,7 +1,7 @@
 import mysql.connector
 
 
-def insert(valor):
+def insert(descricao):
     banco = mysql.connector.connect(
       host="localhost",
       user="root",
@@ -10,9 +10,12 @@ def insert(valor):
     )
     cursor = banco.cursor()
     cursor.execute("insert into tabela_portfolios(id ,descricao)" +
-                   "values (default, '{}');".format(valor))
+                   "values (default, {});".format(descricao))
+    cursor.execute('SELECT MAX(id) FROM tabela_portfolios;')
+    id_portfolio = cursor.fetchall()
     cursor.close()
     banco.close()
+    return id_portfolio
 
 
 def update(descricao, id_user):

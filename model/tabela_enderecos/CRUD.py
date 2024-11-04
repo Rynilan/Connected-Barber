@@ -13,10 +13,10 @@ def conectar():
     return mydb, mycursor
 
 
-def insert(self, pais, estado, cidade, cep, complemento):
+def insert(pais, estado, cidade, cep, complemento):
     mydb, mycursor = conectar()
     sql = str("INSERT INTO tabela_enderecos (fk_pais,fk_estado,fk_cidade," +
-              "cep,complemento) VALUES (%d, %d, %d, %s, %s, %s)")
+              "cep,complemento) VALUES (%d, %d, %d, %s, %s)")
     val = (pais, estado, cidade, cep, complemento)
     mycursor.execute(sql, val)
     mydb.commit()
