@@ -1,2 +1,2 @@
-def formatador_email(email: str) -> str:
+def formatar_email(email):
     return email.lower()
