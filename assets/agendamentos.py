@@ -1,4 +1,3 @@
-Classe agendamento:
 class Agendamento:
     def _init_(self, cliente, funcionario, servico, data, situacao):
         self.__cliente = cliente  # Objeto do tipo Cliente
