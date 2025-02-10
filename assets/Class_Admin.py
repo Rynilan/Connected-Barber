@@ -26,25 +26,25 @@ class Admin():
             return self.portifolio
 
         def set_portifolio(self):
-            self.portifolio = portifolio:
+            self.portifolio = portifolio
 
         def get_funcionario(self):
             return self.funcionario
 
         def set_funcionario(self):
-            self.funcionario = funcionario:
+            self.funcionario = funcionario
 
         def get_produto(self):
             return self.produto
 
         def set_produto(self):
-            self.produto = produto:
+            self.produto = produto
 
         def get_servico(self):
             return self.servico
 
         def set_servico(self):
-            self.servico = servico:
+            self.servico = servico
 
     #exclui o ser
 
