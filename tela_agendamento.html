@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento - Connected Barber</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: #1e1e1e;
+            border-radius: 40px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.705);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: 'Times New Roman', Times, serif;
+            color: #ff0000;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #ff0000;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 15px;
+            background-color: #2d2d2d;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #ff0000;
+            background-color: #333333;
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: calc(100% - 12px) center;
+            padding-right: 35px;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .time-slot {
+            padding: 12px;
+            background-color: #2d2d2d;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            border: 1px solid transparent;
+        }
+
+        .time-slot:hover {
+            background-color: #333333;
+            border-color: #ff0000;
+        }
+
+        .time-slot.selected {
+            background-color: #ff0000;
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background-color: #cc0000;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Estilização específica para o input date */
+        input[type="date"] {
+            color-scheme: dark;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        /* Estilização para placeholder */
+        ::placeholder {
+            color: #888888;
+            opacity: 1;
+        }
+
+        /* Seção de preços */
+        .price-info {
+            background-color: #2d2d2d;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .price-title {
+            color: #ff0000;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .price-value {
+            font-size: 24px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-title">Agendar Horário</h1>
+        <form action="https://seuservidor.com/agendamento" method="POST" id="agendamentoForm">
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="fone">Telefone</label>
+                <input type="tel" id="fone" name="telefone" placeholder="(99) 99999-9999" 
+                       pattern="(\(\d{2}\)\s*)?\d{4,5}-\d{4}" required>
+                <div class="error-message" id="foneError">Formato: (99) 99999-9999</div>
+            </div>
+
+            <div class="form-group">
+                <label for="barbeiro">Escolha seu Barbeiro</label>
+                <select id="barbeiro" name="barbeiro" required>
+                    <option value="">Selecione um profissional</option>
+                    <option value="1">João Silva - Especialista em Degradê</option>
+                    <option value="2">Pedro Santos - Barba e Cabelo</option>
+                    <option value="3">Carlos Oliveira - Pigmentação</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="servico">Serviço Desejado</label>
+                <select id="servico" name="servico" required>
+                    <option value="">Selecione o serviço</option>
+                    <option value="corte">Corte de Cabelo - R$ 45,00</option>
+                    <option value="barba">Barba - R$ 35,00</option>
+                    <option value="combo">Corte + Barba - R$ 70,00</option>
+                    <option value="pigmentacao">Pigmentação - R$ 90,00</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="data">Data do Agendamento</label>
+                <input type="date" id="data" name="data" required>
+            </div>
+
+            <div class="form-group">
+                <label>Horários Disponíveis</label>
+                <div class="time-slots">
+                    <div class="time-slot" data-time="09:00">09:00</div>
+                    <div class="time-slot" data-time="10:00">10:00</div>
+                    <div class="time-slot" data-time="11:00">11:00</div>
+                    <div class="time-slot" data-time="13:00">13:00</div>
+                    <div class="time-slot" data-time="14:00">14:00</div>
+                    <div class="time-slot" data-time="15:00">15:00</div>
+                    <div class="time-slot" data-time="16:00">16:00</div>
+                    <div class="time-slot" data-time="17:00">17:00</div>
+                </div>
+                <input type="hidden" id="horario" name="horario" required>
+            </div>
+
+            <div class="price-info">
+                <div class="price-title">Valor Total</div>
+                <div class="price-value" id="totalPrice">R$ 0,00</div>
+            </div>
+
+            <button type="submit" class="submit-btn">Confirmar Agendamento</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeSlots = document.querySelectorAll('.time-slot');
+            const horarioInput = document.getElementById('horario');
+            const servicoSelect = document.getElementById('servico');
+            const totalPriceDiv = document.getElementById('totalPrice');
+            
+            // Preços dos serviços
+            const precos = {
+                'corte': 45.00,
+                'barba': 35.00,
+                'combo': 70.00,
+                'pigmentacao': 90.00
+            };
+
+            // Atualiza o preço quando um serviço é selecionado
+            servicoSelect.addEventListener('change', function() {
+                const servico = this.value;
+                const preco = precos[servico] || 0;
+                totalPriceDiv.textContent = `R$ ${preco.toFixed(2)}`;
+            });
+
+            timeSlots.forEach(slot => {
+                slot.addEventListener('click', function() {
+                    timeSlots.forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                    horarioInput.value = this.dataset.time;
+                });
+            });
+
+            // Configuração da data mínima
+            const dataInput = document.getElementById('data');
+            const hoje = new Date();
+            hoje.setDate(hoje.getDate() + 1); // Começa a partir de amanhã
+            const amanha = hoje.toISOString().split('T')[0];
+            dataInput.min = amanha;
+
+            // Validação do formulário
+            const form = document.getElementById('agendamentoForm');
+            form.addEventListener('submit', function(event) {
+                if (!horarioInput.value) {
+                    alert('Por favor, selecione um horário');
+                    event.preventDefault();
+                }
+            });
+
+            // Validação do telefone
+            const fone = document.getElementById('fone');
+            const foneError = document.getElementById('foneError');
+            
+            fone.addEventListener('blur', function() {
+                if (this.validity.patternMismatch) {
+                    foneError.style.display = 'block';
+                } else {
+                    foneError.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

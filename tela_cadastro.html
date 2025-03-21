@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected Barber</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .form-container {
+            background-color: #1e1e1e;
+            border-radius: 40px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.705);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: 'Times New Roman', Times, serif;
+            color: #ff0000;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #ff0000;
+        }
+        
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 15px;
+            background-color: #2d2d2d;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #ff0000;
+            background-color: #333333;
+            border-radius: 15px;
+        }
+        
+        ::placeholder {
+            color: #888888;
+            opacity: 1;
+        }
+        
+        .checkbox-group {
+            margin-top: 5px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        input[type="radio"],
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #2d2d2d;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        input[type="checkbox"] {
+            border-radius: 5px;
+        }
+        
+        input[type="radio"]:checked,
+        input[type="checkbox"]:checked {
+            background-color: #ff0000;
+        }
+        
+        input[type="radio"]:checked::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+        }
+        
+        .checkbox-item label {
+            display: inline;
+            margin-bottom: 0;
+            color: #ffffff;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #ff0000;
+            border-radius: 15px;
+        }
+        
+        .section-title {
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #ff0000;
+            font-size: 18px;
+        }
+        
+        .error-message {
+            color: #ff0000;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .terms-text {
+            font-size: 14px;
+            color: #aaaaaa;
+            margin-top: 5px;
+        }
+        
+        .terms-text a {
+            color: #ff0000;
+            text-decoration: none;
+        }
+        
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-title">BEM VINDO AO CBR</h1>
+        <form action="https://seuservidor.com/cadastro" method="POST" id="cadastroForm">
+            <div class="form-group">
+                <label for="Nome">Nome</label>
+                <input type="text" id="Nome" name="Nome" placeholder="Digite seu nome" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="fone">Telefone</label>
+                <input type="tel" id="fone" name="Telefone" placeholder="Digite seu telefone" 
+                       pattern="(\(\d{2}\)\s*)?\d{4,5}-\d{4}" 
+                       title="Digite um telefone no formato (99) 99999-9999 ou 9999-9999" required>
+                <div class="error-message" id="foneError">Formato: (99) 99999-9999 ou 9999-9999</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" 
+                       minlength="8" required>
+                <div class="error-message" id="senhaError">A senha deve ter pelo menos 8 caracteres</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmarSenha">Confirmar Senha</label>
+                <input type="password" id="confirmarSenha" name="confirmarSenha" 
+                       placeholder="Confirme sua senha" required>
+                <div class="error-message" id="confirmarSenhaError">As senhas não coincidem</div>
+            </div>
+            
+            <div class="section-title">QUEM É VOCÊ?</div>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="radio" id="barbeiro" name="cargo" value="barbeiro" required>
+                    <label for="barbeiro">BARBEIRO</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="radio" id="usuario" name="cargo" value="usuario">
+                    <label for="usuario">USUÁRIO</label>
+                </div>
+            </div>
+
+            <div class="section-title">COMO VOCÊ SE IDENTIFICA?</div>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="radio" id="ele" name="genero" value="ele" required>
+                    <label for="ele">ELE/DELE</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="radio" id="ela" name="genero" value="ela">
+                    <label for="ela">ELA/DELA</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="radio" id="outros" name="genero" value="outros">
+                    <label for="outros">OUTROS</label>
+                </div>
+            </div>
+            
+            <div class="checkbox-group" style="margin-top: 20px;">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="termos" name="termos" required>
+                    <label for="termos">Aceito os termos de uso e política de privacidade</label>
+                </div>
+                <div class="terms-text">
+                    Ao se cadastrar, você concorda com nossos <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>.
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('cadastroForm');
+            const senha = document.getElementById('senha');
+            const confirmarSenha = document.getElementById('confirmarSenha');
+            const confirmarSenhaError = document.getElementById('confirmarSenhaError');
+            const fone = document.getElementById('fone');
+            const foneError = document.getElementById('foneError');
+            const senhaError = document.getElementById('senhaError');
+            
+            // Mostrar mensagem de erro do telefone quando o campo perde o foco
+            fone.addEventListener('blur', function() {
+                if (fone.validity.patternMismatch) {
+                    foneError.style.display = 'block';
+                } else {
+                    foneError.style.display = 'none';
+                }
+            });
+            
+            // Mostrar mensagem de erro da senha quando o campo perde o foco
+            senha.addEventListener('blur', function() {
+                if (senha.validity.tooShort) {
+                    senhaError.style.display = 'block';
+                } else {
+                    senhaError.style.display = 'none';
+                }
+            });
+            
+            // Verificar se as senhas coincidem quando o campo de confirmação perde o foco
+            confirmarSenha.addEventListener('blur', function() {
+                if (senha.value !== confirmarSenha.value) {
+                    confirmarSenhaError.style.display = 'block';
+                    confirmarSenha.setCustomValidity('As senhas não coincidem');
+                } else {
+                    confirmarSenhaError.style.display = 'none';
+                    confirmarSenha.setCustomValidity('');
+                }
+            });
+            
+            // Verificar novamente quando a senha principal é alterada
+            senha.addEventListener('input', function() {
+                if (confirmarSenha.value) {
+                    if (senha.value !== confirmarSenha.value) {
+                        confirmarSenhaError.style.display = 'block';
+                        confirmarSenha.setCustomValidity('As senhas não coincidem');
+                    } else {
+                        confirmarSenhaError.style.display = 'none';
+                        confirmarSenha.setCustomValidity('');
+                    }
+                }
+            });
+            
+            // Validação do formulário antes do envio
+            form.addEventListener('submit', function(event) {
+                if (senha.value !== confirmarSenha.value) {
+                    confirmarSenhaError.style.display = 'block';
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
