@@ -12,12 +12,7 @@ and maybe start our path on the tech world.
 
 ## Credits
 
-* [Rynilan](https://github.com/Rynilan/)  
-* [PAULO GABRIEL DA LUZ(lider)](https://github.com/DRXMORENO/)  
-* [mps](https://github.com/mps192004/)  
+* [PAULO GABRIEL DA LUZ](https://github.com/DRXMORENO/)  
 * [Josias Aragão](https://github.com/JosiasAragao/)  
-* [LuizAntonioLz](https://github.com/LuizAntonioLz/)  
 * [Crystian](https://github.com/CrystianSantos/)  
-* [Luiz Felype](https://github.com/21Lulz's/)
 * [rodrigo_silva_ofc81](https://github.com/RdSilva222/)
-* [Roberta Tauane](https://github.com/ro558/)
