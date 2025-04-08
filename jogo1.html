@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joguinho - Connected Barber</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .game-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: #1e1e1e;
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ff0000;
+            overflow: hidden;
+            display: none; /* Esconde o jogo até ser iniciado */
+        }
+
+        .target {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .target:hover {
+            transform: scale(1.2);
+        }
+
+        .score, .timer {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff0000;
+        }
+
+        .game-over {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff0000;
+            margin-top: 20px;
+            display: none; /* Esconde até o jogo terminar */
+        }
+
+        .start-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #ff0000;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: #cc0000;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            border-top: 1px solid #ff0000;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .bottom-nav a {
+            color: #ffffff;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .bottom-nav a:hover {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clique no Alvo</h1>
+    <button class="start-button">Iniciar Jogo</button>
+    <div class="game-container">
+        <div class="target"></div>
+    </div>
+    <div class="score">Pontuação: 0</div>
+    <div class="timer">Tempo: 30s</div>
+    <div class="game-over">Fim de Jogo!</div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="configuracoes.html" title="Configurações"><i class="fas fa-cog"></i></a>
+        <a href="tela_perfil.html" title="Perfil"><i class="fas fa-user-tie"></i></a>
+        <a href="mapa.html" title="Clientes"><i class="fas fa-male"></i></a>
+        <a href="tela_jogos.html" title="Jogos"><i class="fas fa-gamepad"></i></a>
+        <a href="tela_dm.html" title="Mensagens"><i class="fas fa-comments"></i></a>
+    </div>
+
+    <script>
+        const target = document.querySelector('.target');
+        const scoreElement = document.querySelector('.score');
+        const timerElement = document.querySelector('.timer');
+        const gameOverElement = document.querySelector('.game-over');
+        const gameContainer = document.querySelector('.game-container');
+        const startButton = document.querySelector('.start-button');
+
+        let score = 0;
+        let timeLeft = 30; // Tempo inicial em segundos
+        let speed = 1000; // Velocidade inicial (em milissegundos)
+        let timerInterval, targetInterval;
+
+        // Função para mover o alvo para uma posição aleatória
+        function moveTarget() {
+            const containerWidth = gameContainer.offsetWidth;
+            const containerHeight = gameContainer.offsetHeight;
+            const targetSize = target.offsetWidth;
+
+            const randomX = Math.floor(Math.random() * (containerWidth - targetSize));
+            const randomY = Math.floor(Math.random() * (containerHeight - targetSize));
+
+            target.style.left = `${randomX}px`;
+            target.style.top = `${randomY}px`;
+        }
+
+        // Evento de clique no alvo
+        target.addEventListener('click', () => {
+            score++;
+            scoreElement.textContent = `Pontuação: ${score}`;
+            timeLeft += 3; // Adiciona 3 segundos ao tempo
+            moveTarget();
+
+            // Aumenta a velocidade a cada 5 pontos
+            if (score % 5 === 0 && speed > 300) {
+                speed -= 100; // Reduz o intervalo de movimento
+                clearInterval(targetInterval);
+                targetInterval = setInterval(moveTarget, speed);
+            }
+        });
+
+        // Temporizador do jogo
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `Tempo: ${timeLeft}s`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    clearInterval(targetInterval);
+                    gameOverElement.style.display = 'block';
+                    target.style.display = 'none'; // Esconde o alvo
+                }
+            }, 1000);
+        }
+
+        // Função para iniciar o jogo
+        startButton.addEventListener('click', () => {
+            score = 0;
+            timeLeft = 30;
+            speed = 1000;
+            scoreElement.textContent = `Pontuação: ${score}`;
+            timerElement.textContent = `Tempo: ${timeLeft}s`;
+            gameOverElement.style.display = 'none';
+            target.style.display = 'block';
+            gameContainer.style.display = 'block';
+            startButton.style.display = 'none'; // Esconde o botão de iniciar
+
+            moveTarget();
+            targetInterval = setInterval(moveTarget, speed);
+            startTimer();
+        });
+    </script>
+</body>
+</html>

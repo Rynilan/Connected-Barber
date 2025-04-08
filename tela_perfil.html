@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil da Barbearia - Connected Barber</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1e1e1e;
+            padding: 15px 0;
+            width: 100%;
+            border-bottom: 1px solid #ff0000;
+            text-align: center;
+        }
+
+        .nav-content {
+            max-width: 975px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center; /* Centraliza os itens */
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-family: 'Arial Black', sans-serif; /* Ajuste a fonte conforme necessário */
+            color: #ff0000;
+            margin-right: auto; /* Move o logo para a esquerda */
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+
+        .search-input {
+            background-color: #262626;
+            border: 1px solid #ff0000;
+            border-radius: 8px;
+            color: #ffffff;
+            padding: 10px 40px;
+            width: 100%;
+            font-size: 14px;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 20px #ff0000;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff0000;
+        }
+
+        .profile-container {
+            max-width: 975px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #ff0000;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-username {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .profile-bio {
+            font-size: 14px;
+            color: #8e8e8e;
+            margin-top: 10px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #8e8e8e;
+        }
+
+        .profile-stats div {
+            text-align: center;
+        }
+
+        .profile-stats div span {
+            display: block;
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .post-container {
+            max-width: 975px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .post {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #262626;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .post-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #ff0000;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .post-username {
+            font-weight: 600;
+        }
+
+        .post-content {
+            font-size: 14px;
+            color: #8e8e8e;
+            height: 300px; /* Ajuste a altura conforme necessário */
+            border: 1px solid #ffffff;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .post-actions i {
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .post-actions i:hover {
+            color: #ff0000;
+        }
+
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #8e8e8e;
+        }
+
+        .bottom-nav {
+            background-color: #1e1e1e;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #ff0000;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+
+        .bottom-nav a {
+            color: #ffffff;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .bottom-nav a:hover {
+            color: #ff0000;
+        }
+
+        .agendar-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #ff0000;
+            color: #ffffff;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .agendar-btn:hover {
+            background-color: #e60000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">CBR</div>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Pesquisar...">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Container de Perfil -->
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="https://via.placeholder.com/100" class="profile-avatar" alt="User Avatar">
+            <div class="profile-info">
+                <div class="profile-username">Nome da Barbearia</div>
+                <div class="profile-bio">Bio da barbearia. Aqui você pode adicionar uma breve descrição sobre a barbearia.</div>
+            </div>
+        </div>
+        <div class="profile-stats">
+            <div>
+                <span>150</span>
+                Postagens
+            </div>
+            <div>
+                <span>300</span>
+                Seguidores
+            </div>
+            <div>
+                <span>180</span>
+                Seguindo
+            </div>
+        </div>
+        <a href="#" class="agendar-btn">Agendar Serviços</a>
+    </div>
+
+    <!-- Container de Postagens -->
+    <div class="post-container">
+        <div class="post">
+            <div class="post-header">
+                <img src="https://via.placeholder.com/60" class="post-avatar" alt="User Avatar">
+                <div class="post-username">user barbeiro</div>
+            </div>
+            <div class="post-content"></div>
+            <div class="post-actions">
+                <i class="fas fa-heart" onclick="curtirPostagem(this)"></i>
+                <i class="fas fa-comment" onclick="comentarPostagem()"></i>
+                <i class="fas fa-calendar-alt" onclick="agendarHorario()"></i>
+            </div>
+            <div class="post-stats">
+                <span class="likes-count">0 curtidas</span>
+                <span class="comments-count">0 comentários</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="configuracoes.html"><i class="fas fa-cog"></i></a> <!-- Redireciona para a página de configurações -->
+        <a href="tela_perfil.html"><i class="fas fa-user-tie"></i></a> <!-- Redireciona para a página de perfil -->
+        <a href="mapa.html"><i class="fas fa-male"></i></a> <!-- Redireciona para a página de clientes -->
+        <a href="/connected_barber.html/tela_jogos.html"><i class="fas fa-gamepad"></i></a> <!-- Redireciona para a página de jogos -->
+        <a href="tela_dm.html"><i class="fas fa-comments"></i></a> <!-- Redireciona para a página de mensagens -->
+    </div>
+
+    <script>
+        // Simulação de obtenção do nome do usuário do banco de dados
+        const nomeUsuario = "Barbearia Exemplo"; // Substitua por código para obter o nome do banco de dados
+
+        // Atualizar a mensagem de boas-vindas com o nome do usuário
+        document.getElementById('welcome-text').textContent = `BEM VINDO (${nomeUsuario.toUpperCase()})`;
+
+        function curtirPostagem(element) {
+            const likesCountElement = element.parentElement.nextElementSibling.querySelector('.likes-count');
+            let likesCount = parseInt(likesCountElement.textContent);
+            if (element.style.color === 'red') {
+                element.style.color = 'white';
+                likesCount--;
+            } else {
+                element.style.color = 'red';
+                likesCount++;
+            }
+            likesCountElement.textContent = `${likesCount} curtidas`;
+        }
+
+        function comentarPostagem() {
+            const commentsCountElement = document.querySelector('.comments-count');
+            let commentsCount = parseInt(commentsCountElement.textContent);
+            commentsCount++;
+            commentsCountElement.textContent = `${commentsCount} comentários`;
+            alert('Função de comentar ainda não implementada.');
+        }
+
+        function agendarHorario() {
+            alert('Função de agendar horário ainda não implementada.');
+        }
+    </script>
+</body>
+</html>
