@@ -12,8 +12,8 @@ and maybe start our path on the tech world.
 
 ## Credits
 
-* [Rynilan (myself)](https://github.com/Rynilan/)  
-* [PAULO GABRIEL DA LUZ](https://github.com/DRXMORENO/)  
+* [Rynilan](https://github.com/Rynilan/)  
+* [PAULO GABRIEL DA LUZ(lider)](https://github.com/DRXMORENO/)  
 * [mps](https://github.com/mps192004/)  
 * [Josias Aragão](https://github.com/JosiasAragao/)  
 * [LuizAntonioLz](https://github.com/LuizAntonioLz/)  
