@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens - Connected Barber</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1e1e1e;
+            padding: 15px 0;
+            width: 100%;
+            border-bottom: 1px solid #ff0000;
+            text-align: center;
+        }
+
+        .nav-content {
+            max-width: 975px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center; /* Centraliza os itens */
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-family: 'Arial Black', sans-serif; /* Ajuste a fonte conforme necessário */
+            color: #ff0000;
+            margin-right: auto; /* Move o logo para a esquerda */
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+
+        .search-input {
+            background-color: #262626;
+            border: 1px solid #ff0000;
+            border-radius: 8px;
+            color: #ffffff;
+            padding: 10px 40px;
+            width: 100%;
+            font-size: 14px;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 20px #ff0000;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff0000;
+        }
+
+        .messages-container {
+            max-width: 975px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .message {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ff0000;
+        }
+
+        .message:last-child {
+            border-bottom: none;
+        }
+
+        .message-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #ff0000;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .message-info {
+            flex-grow: 1;
+        }
+
+        .message-username {
+            font-weight: 600;
+        }
+
+        .message-text {
+            font-size: 14px;
+            color: #8e8e8e;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #8e8e8e;
+        }
+
+        .bottom-nav {
+            background-color: #1e1e1e;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #ff0000;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+
+        .bottom-nav a {
+            color: #ffffff;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .bottom-nav a:hover {
+            color: #ff0000;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff0000;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .notification.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">CBR</div>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Pesquisar...">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Container de Mensagens -->
+    <div class="messages-container">
+        <div class="message">
+            <img src="https://via.placeholder.com/50" class="message-avatar" alt="User Avatar">
+            <div class="message-info">
+                <div class="message-username">Nome do Usuário</div>
+                <div class="message-text">Última mensagem enviada...</div>
+            </div>
+            <div class="message-time">10:30</div>
+        </div>
+        <!-- Adicione mais mensagens aqui -->
+    </div>
+    <div class="bottom-nav">
+        <a href="configuracoes.html"><i class="fas fa-cog"></i></a> <!-- Redireciona para a página de configurações -->
+        <a href="tela_perfil.html"><i class="fas fa-user-tie"></i></a> <!-- Redireciona para a página de perfil -->
+        <a href="mapa.html"><i class="fas fa-male"></i></a> <!-- Redireciona para a página de clientes -->
+        <a href="/connected_barber.html/tela_jogos.html"><i class="fas fa-gamepad"></i></a> <!-- Redireciona para a página de jogos -->
+        <a href="tela_dm.html"><i class="fas fa-comments"></i></a> <!-- Redireciona para a página de mensagens -->
+    </div>
+    <!-- Notificação de Confirmação de Serviço -->
+    <div class="notification" id="notification">
+        Serviço confirmado com sucesso! Tempo estimado de chegada: <span id="tempo-chegada"></span> minutos.
+    </div>
+
+    <script>
+        // Função para mostrar a notificação de confirmação de serviço
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            const tempoChegada = document.getElementById('tempo-chegada');
+            const tempoEstimado = Math.floor(Math.random() * 30) + 10; // Tempo estimado entre 10 e 40 minutos
+            tempoChegada.textContent = tempoEstimado;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        // Simulação de confirmação de serviço
+        setTimeout(showNotification, 2000); // Mostra a notificação após 2 segundos
+    </script>
+</body>
+</html>

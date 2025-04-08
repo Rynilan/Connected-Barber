@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected Barber - Feed</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1e1e1e;
+            padding: 15px 0;
+            width: 100%;
+            border-bottom: 1px solid #ff0000;
+            text-align: center;
+        }
+
+        .nav-content {
+            max-width: 975px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-family: 'Arial Black', sans-serif;
+            color: #ff0000;
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            background-color: #262626;
+            border: 1px solid #ff0000;
+            border-radius: 8px;
+            color: #ffffff;
+            padding: 10px 40px;
+            width: 100%;
+            font-size: 14px;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ff0000;
+            box-shadow: 0 0 20px #ff0000;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff0000;
+        }
+
+        /* Postagens */
+        .post-container {
+            max-width: 975px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .post {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #262626;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .post-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #ff0000;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .post-username {
+            font-weight: 600;
+        }
+
+        .post-content {
+            font-size: 14px;
+            color: #8e8e8e;
+            height: 300px;
+            border: 1px solid #ffffff;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .post-actions i {
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .post-actions i:hover {
+            color: #ff0000;
+        }
+
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #8e8e8e;
+        }
+
+        .comments-container {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .comments-container p {
+            color: #ffffff;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .comments-container input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ff0000;
+            border-radius: 8px;
+            background-color: #262626;
+            color: #ffffff;
+            margin-top: 10px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            border-top: 1px solid #ff0000;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .bottom-nav a {
+            color: #ffffff;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .bottom-nav a:hover {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">CBR</div>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Pesquisar...">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Container de Postagens -->
+    <div class="post-container">
+        <div class="post">
+            <div class="post-header">
+                <img src="https://via.placeholder.com/60" class="post-avatar" alt="User Avatar">
+                <div class="post-username">user barbeiro</div>
+            </div>
+            <div class="post-content"></div>
+            <div class="post-actions">
+                <i class="fas fa-heart" onclick="curtirPostagem(this)"></i>
+                <i class="fas fa-comment" onclick="toggleComments(this)"></i>
+                <a href="tela_agendamento.html"><i class="fas fa-calendar-alt"></i></a>
+            </div>
+            <div class="post-stats">
+                <span class="likes-count">0 curtidas</span>
+                <span class="comments-count">0 comentários</span>
+            </div>
+            <div class="comments-container">
+                <p>Comentário 1: Excelente trabalho!</p>
+                <p>Comentário 2: Muito bom!</p>
+                <input type="text" placeholder="Adicionar um comentário...">
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="configuracoes.html" title="Configurações"><i class="fas fa-cog"></i></a>
+        <a href="tela_perfil.html" title="Perfil"><i class="fas fa-user-tie"></i></a>
+        <a href="mapa.html" title="Clientes"><i class="fas fa-male"></i></a>
+        <a href="/connected_barber.html/tela_jogos.html" title="Jogos"><i class="fas fa-gamepad"></i></a>
+        <a href="tela_dm.html" title="Mensagens"><i class="fas fa-comments"></i></a>
+    </div>
+
+    <script>
+        function toggleComments(element) {
+            const commentsContainer = element.parentElement.parentElement.querySelector('.comments-container');
+            if (commentsContainer.style.display === 'none' || commentsContainer.style.display === '') {
+                commentsContainer.style.display = 'block';
+            } else {
+                commentsContainer.style.display = 'none';
+            }
+        }
+
+        function curtirPostagem(element) {
+            const likesCountElement = element.parentElement.nextElementSibling.querySelector('.likes-count');
+            let likesCount = parseInt(likesCountElement.textContent);
+            if (element.style.color === 'red') {
+                element.style.color = 'white';
+                likesCount--;
+            } else {
+                element.style.color = 'red';
+                likesCount++;
+            }
+            likesCountElement.textContent = `${likesCount} curtidas`;
+        }
+    </script>
+</body>
+</html>

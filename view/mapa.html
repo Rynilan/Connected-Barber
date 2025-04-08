@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Interativo</title>
+    <!-- Inclua os estilos necessários para o Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        /* Estilo para o fundo da página */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Fundo preto */
+            color: #fff; /* Texto branco */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Estilo para o mapa */
+        #map {
+            height: 400px;
+            width: 90%;
+            max-width: 975px;
+            border: 2px solid #ff0000;
+            border-radius: 8px;
+        }
+
+        /* Estilo para o botão */
+        .btn-voltar {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            transition: all 0.3s ease;
+        }
+
+        .btn-voltar:hover {
+            background-color: #ff4d4d;
+            box-shadow: 0 0 20px #ff4d4d, 0 0 30px #ff4d4d;
+        }
+
+        .btn-voltar:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <!-- Adicione o mapa -->
+    <div id="map"></div>
+
+    <!-- Botão para voltar ao início -->
+    <button class="btn-voltar" onclick="voltarInicio()">Voltar ao Início</button>
+
+    <!-- Inclua os scripts necessários para o Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Inicializar o mapa com uma posição padrão
+        const map = L.map('map').setView([0, 0], 2); // Coordenadas iniciais genéricas
+
+        // Adicionar camada de mapa (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Verificar se a geolocalização está disponível no navegador
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+
+                    // Atualizar a visualização do mapa para a localização atual
+                    map.setView([latitude, longitude], 13);
+
+                    // Adicionar um marcador na localização atual
+                    L.marker([latitude, longitude]).addTo(map)
+                        .bindPopup('Você está aqui.')
+                        .openPopup();
+                },
+                (error) => {
+                    console.error('Erro ao obter localização:', error);
+                    alert('Não foi possível obter sua localização.');
+                }
+            );
+        } else {
+            alert('Geolocalização não é suportada pelo seu navegador.');
+        }
+
+        // Função para voltar ao início
+        function voltarInicio() {
+            window.location.href = 'tela_inicial.html'; // Certifique-se de que o arquivo está no mesmo diretório
+        }
+    </script>
+</body>
+</html>

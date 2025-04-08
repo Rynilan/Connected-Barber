@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Cobrinha - Connected Barber</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .game-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: #1e1e1e;
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ff0000;
+            overflow: hidden;
+            display: none; /* Esconde o jogo até ser iniciado */
+        }
+
+        .snake {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0000;
+        }
+
+        .food {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #00ff00;
+            border-radius: 50%;
+        }
+
+        .score {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff0000;
+        }
+
+        .game-over {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff0000;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .control-button {
+            width: 50px;
+            height: 50px;
+            background-color: #1e1e1e;
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .control-button:hover {
+            background-color: #ff0000;
+        }
+
+        .start-button, .restart-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #ff0000;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .start-button:hover, .restart-button:hover {
+            background-color: #cc0000;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            border-top: 1px solid #ff0000;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .bottom-nav a {
+            color: #ffffff;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .bottom-nav a:hover {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jogo da Cobrinha</h1>
+    <button class="start-button">Iniciar Jogo</button>
+    <button class="restart-button" style="display: none;">Reiniciar Jogo</button>
+    <div class="game-container" id="game-container"></div>
+    <div class="score">Pontuação: 0</div>
+    <div class="game-over">Fim de Jogo!</div>
+
+    <!-- Controles para Mobile -->
+    <div class="controls">
+        <div class="controls-row">
+            <div class="control-button" id="up">▲</div>
+        </div>
+        <div class="controls-row">
+            <div class="control-button" id="left">◀</div>
+            <div class="control-button" id="right">▶</div>
+        </div>
+        <div class="controls-row">
+            <div class="control-button" id="down">▼</div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="configuracoes.html" title="Configurações"><i class="fas fa-cog"></i></a>
+        <a href="tela_perfil.html" title="Perfil"><i class="fas fa-user-tie"></i></a>
+        <a href="mapa.html" title="Clientes"><i class="fas fa-male"></i></a>
+        <a href="/connected_barber.html/tela_jogos.html" title="Jogos"><i class="fas fa-gamepad"></i></a>
+        <a href="tela_dm.html" title="Mensagens"><i class="fas fa-comments"></i></a>
+    </div>
+
+    <script>
+        const gameContainer = document.getElementById('game-container');
+        const scoreElement = document.querySelector('.score');
+        const gameOverElement = document.querySelector('.game-over');
+        const startButton = document.querySelector('.start-button');
+        const restartButton = document.querySelector('.restart-button');
+
+        const gridSize = 10; // Tamanho de cada célula
+        let snake = [{ x: 150, y: 150 }]; // Posição inicial da cobra
+        let direction = { x: 10, y: 0 }; // Direção inicial (cobra começa andando para a direita)
+        let food = { x: 0, y: 0 }; // Posição inicial da comida
+        let score = 0;
+        let gameInterval;
+        let speed = 200; // Velocidade inicial (em milissegundos)
+
+        // Função para criar a comida em uma posição aleatória
+        function createFood() {
+            food.x = Math.floor(Math.random() * (gameContainer.offsetWidth / gridSize)) * gridSize;
+            food.y = Math.floor(Math.random() * (gameContainer.offsetHeight / gridSize)) * gridSize;
+
+            const foodElement = document.createElement('div');
+            foodElement.classList.add('food');
+            foodElement.style.left = `${food.x}px`;
+            foodElement.style.top = `${food.y}px`;
+            gameContainer.appendChild(foodElement);
+        }
+
+        // Função para mover a cobra
+        function moveSnake() {
+            const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+            // Verifica colisão com as bordas
+            if (
+                head.x < 0 ||
+                head.y < 0 ||
+                head.x >= gameContainer.offsetWidth ||
+                head.y >= gameContainer.offsetHeight ||
+                snake.some(segment => segment.x === head.x && segment.y === head.y)
+            ) {
+                clearInterval(gameInterval);
+                gameOverElement.style.display = 'block';
+                restartButton.style.display = 'block'; // Mostra o botão de reiniciar
+                return;
+            }
+
+            snake.unshift(head);
+
+            // Verifica se a cobra comeu a comida
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                scoreElement.textContent = `Pontuação: ${score}`;
+                gameContainer.querySelector('.food').remove();
+                createFood();
+
+                // Aumenta a velocidade a cada 3 comidas
+                if (score % 3 === 0 && speed > 50) {
+                    speed -= 20; // Reduz o intervalo de tempo
+                    clearInterval(gameInterval);
+                    gameInterval = setInterval(moveSnake, speed);
+                }
+            } else {
+                snake.pop(); // Remove o último segmento da cobra
+            }
+
+            renderSnake();
+        }
+
+        // Função para renderizar a cobra
+        function renderSnake() {
+            gameContainer.innerHTML = ''; // Limpa o contêiner
+            snake.forEach(segment => {
+                const segmentElement = document.createElement('div');
+                segmentElement.classList.add('snake');
+                segmentElement.style.left = `${segment.x}px`;
+                segmentElement.style.top = `${segment.y}px`;
+                gameContainer.appendChild(segmentElement);
+            });
+
+            // Renderiza a comida
+            const foodElement = document.createElement('div');
+            foodElement.classList.add('food');
+            foodElement.style.left = `${food.x}px`;
+            foodElement.style.top = `${food.y}px`;
+            gameContainer.appendChild(foodElement);
+        }
+
+        // Evento de teclado para mudar a direção
+        document.addEventListener('keydown', event => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    if (direction.y === 0) direction = { x: 0, y: -gridSize };
+                    break;
+                case 'ArrowDown':
+                    if (direction.y === 0) direction = { x: 0, y: gridSize };
+                    break;
+                case 'ArrowLeft':
+                    if (direction.x === 0) direction = { x: -gridSize, y: 0 };
+                    break;
+                case 'ArrowRight':
+                    if (direction.x === 0) direction = { x: gridSize, y: 0 };
+                    break;
+            }
+        });
+
+        // Controles para mobile
+        document.getElementById('up').addEventListener('click', () => {
+            if (direction.y === 0) direction = { x: 0, y: -gridSize };
+        });
+        document.getElementById('down').addEventListener('click', () => {
+            if (direction.y === 0) direction = { x: 0, y: gridSize };
+        });
+        document.getElementById('left').addEventListener('click', () => {
+            if (direction.x === 0) direction = { x: -gridSize, y: 0 };
+        });
+        document.getElementById('right').addEventListener('click', () => {
+            if (direction.x === 0) direction = { x: gridSize, y: 0 };
+        });
+
+        // Inicia o jogo
+        function startGame() {
+            startButton.style.display = 'none'; // Esconde o botão de iniciar
+            restartButton.style.display = 'none'; // Esconde o botão de reiniciar
+            gameContainer.style.display = 'block'; // Mostra o jogo
+            direction = { x: 10, y: 0 }; // Reseta a direção inicial (cobra começa andando para a direita)
+            snake = [{ x: 150, y: 150 }]; // Reseta a posição inicial da cobra
+            score = 0; // Reseta a pontuação
+            speed = 200; // Reseta a velocidade inicial
+            scoreElement.textContent = `Pontuação: ${score}`;
+            gameOverElement.style.display = 'none'; // Esconde a mensagem de fim de jogo
+            createFood();
+            renderSnake();
+            gameInterval = setInterval(moveSnake, speed);
+        }
+
+        startButton.addEventListener('click', startGame);
+        restartButton.addEventListener('click', startGame);
+    </script>
+</body>
+</html>

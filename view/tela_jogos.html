@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected Barber - Jogos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1e1e1e;
+            padding: 15px 0;
+            width: 100%;
+            border-bottom: 1px solid #ff0000;
+            text-align: center;
+        }
+
+        .nav-content {
+            max-width: 975px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-family: 'Arial Black', sans-serif;
+            color: #ff0000;
+        }
+
+        /* Contêiner de Jogos */
+        .games-container {
+            max-width: 975px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .game {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #262626;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ff0000;
+            text-align: center;
+        }
+
+        .game h2 {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .game p {
+            font-size: 14px;
+            color: #8e8e8e;
+            margin-bottom: 20px;
+        }
+
+        .game a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .game a:hover {
+            background-color: #cc0000;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            border-top: 1px solid #ff0000;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .bottom-nav a {
+            color: #ffffff;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .bottom-nav a:hover {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">CBR</div>
+        </div>
+    </nav>
+
+    <!-- Contêiner de Jogos -->
+    <div class="games-container">
+        <!-- Jogo 1 -->
+        <div class="game">
+            <h2>Jogo da Cobrinha</h2>
+            <p>Controle a cobra e colete os alimentos para aumentar sua pontuação!</p>
+            <a href="/connected_barber.html/jogos2.html" target="_blank">Jogar Agora</a>
+        </div>
+
+        <!-- Jogo 2 -->
+        <div class="game">
+            <h2>Jogo Clique no Alvo</h2>
+            <p>Teste sua agilidade clicando no alvo o mais rápido possível!</p>
+            <a href="/connected_barber.html/jogo1.html" target="_blank">Jogar Agora</a>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="configuracoes.html" title="Configurações"><i class="fas fa-cog"></i></a>
+        <a href="tela_perfil.html" title="Perfil"><i class="fas fa-user-tie"></i></a>
+        <a href="mapa.html" title="Clientes"><i class="fas fa-male"></i></a>
+        <a href="/connected_barber.html/tela_jogos.html" title="Jogos"><i class="fas fa-gamepad"></i></a>
+        <a href="tela_dm.html" title="Mensagens"><i class="fas fa-comments"></i></a>
+    </div>
+</body>
+</html>
